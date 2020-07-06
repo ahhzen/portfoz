@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
-import pdb
+from flask import Flask, render_template, request
+import csv
+import sys
+import os
 
 app = Flask(__name__)
 
@@ -23,10 +25,6 @@ def about():
 def contact1(message=None):
     return render_template("contact.html", anymessage = "")
 
-##@app.route("/contact.html/<message>")
-##def contact(message=None):
-##    return render_template("contact.html", anymessage = message)
-
 @app.route("/works.html")
 def works():
     return render_template("works.html")
@@ -46,14 +44,16 @@ def submitcontact():
             email = request.form.get("email", "No email")
             subject = request.form.get("subject", "No Subject")
             message = request.form.get("message", "No Message")
-            insertedid = store_contact(email, subject, message)
+            # insertedid = store_contact(email, subject, message)
+            contactdata = request.form.to_dict()
+            insertedid = store_contact_csv(contactdata)
 
-            if insertedid:
+            if insertedid and type(insertedid) == bool:
                 message = "Success!"
                 return render_template("contact.html", anymessage=message)
 ##                return redirect(url_for("contact", message="Thank you for your message"))
             else:
-                message = "Failed!"
+                message = insertedid  #"Failed!"
                 return render_template("contact.html", anymessage=message)
 ##                return redirect(url_for("contact", message="Something went wrong. Please try again later"))
 
@@ -63,16 +63,29 @@ def submitcontact():
 
     return "Done"
 
-import pymongo
-def store_contact(email, subject, message):
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    db = client["portfolio"]
-    collection = db["contact"]
 
-    return collection.insert_one({"email": email, "subject": subject, "message": message})
+# def store_contact(email, subject, message):
+#     client = pymongo.MongoClient("mongodb://localhost:27017/")
+#     db = client["portfolio"]
+#     collection = db["contact"]
 
+#     return collection.insert_one({"email": email, "subject": subject, "message": message})
 
+def store_contact_csv(data):
+    try:
+        with open("./portfoz/database/contact.csv", "a") as csvfile:
+            csv_writer = csv.writer(csvfile, delimiter=",", quotechar="\"", quoting=csv.QUOTE_MINIMAL)
+            email = data.get("email")
+            subject= data.get("subject")
+            message = data.get("message")
 
+            csv_writer.writerow([email,subject,message])
+            csvfile.close()
+
+            return True
+    except:
+        err = sys.exc_info()[0]
+        return "Error : %s " %err + os.getcwd()
 
 if __name__ == "__main__":
     app.run()
