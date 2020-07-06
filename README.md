@@ -1,3 +1,3 @@
 # portfoz
-Zen the Portfolio
+Some simple portfolio web development using python and flask
 
