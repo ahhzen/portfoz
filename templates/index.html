@@ -55,11 +55,15 @@
         <div class="col-xs-12">
           <div class="hero-full-wrapper">
             <div class="text-content">
-              <h1>Hello World,<br>
+              
+              {% set headline = data.get("headline") %}
+              {% set maintitle = headline.pop(0) %}
+        
+              <h1>{{ maintitle }},<br>
                 <span id="typed-strings">
-                  <span>This is Pi Zen</span>
-                  <span>Greatest Python Developer</span>
-                  <span>Working as a Freelance</span>
+                  {% for line in headline %}
+                  <span>{{ line }}</span>
+                  {% endfor %}
                 </span>
                 <span id="typed"></span>
               </h1>

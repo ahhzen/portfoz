@@ -1,0 +1,8 @@
+{"works": [{"work1":{"title": "work1 title", "description": ["work1-line1 work1-line1","work1-line2 work1-line1 work1-line2 work1-line1 work1-line2 work1-line1","work1-line3 work1-line1 work1-line1"], "image": "./static/assets/images/work06-hover.jpg"}},
+{"work2":{"title": "work2 title", "description": ["work2-line1 work2-line1 work2-line1 work2-line1 work2-line1 work2-line1","work2-line2 work2-line1","work2-line3 work2-line1 work2-line1"], "image": "./static/assets/images/work02-hover.jpg"}},
+{"work3":{"title": "work3 title", "description": ["work3-line1 work3-line1work3-line1 work3-line1 work3-line1work3-line1 work3-line1 work3-line1work3-line1 work3-line1 work3-line1work3-line1","work3-line2work3-line1","work3-line3 work3-line1"], "image": "./static/assets/images/work03-hover1.jpg"}},
+{"work4":{"title": "work4 title", "description": ["work4-line1","work4-line2","work4-line3","work4-line2","work4-line3", "work4-line2","work4-line3","work4-line2","work4-line3"], "image": "./static/assets/images/work04-hover.jpg"}},
+{"work5":{"title": "work5 title", "description": ["work5-line1","work5-line2","work5-line3 work5-line3 work5-line3 work5-line3 work5-line3","work5-line3 work5-line3 work5-line3 work5-line3 work5-line3"], "image": "./static/assets/images/work01-hover.jpg"}}
+                    ]  
+                
+            }

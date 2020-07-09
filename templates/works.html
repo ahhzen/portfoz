@@ -56,7 +56,7 @@
       <div class="col-sm-8 col-sm-offset-2 section-container-spacer">
         <div class="text-center">
           <h1 class="h2">02 : Works</h1>
-          <p>Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies, nisl nunc pulvinar ligula, id sodales arcu sapien in nisi. Quisque libero enim, mattis non augue posuere, venenatis dapibus urna.</p>
+          <p>A programmer who likes to code for fun and here is the list of things he does</p>
         </div>
       </div>
 
@@ -65,88 +65,55 @@
       <div id="myCarousel" class="carousel slide projects-carousel">
         <!-- Carousel items -->
         <div class="carousel-inner">
-            <div class="item active">
-                <div class="row">
-                    <div class="col-sm-4">
+            {% set itemperpage = 3 %}
+            {% set totalwork = data|length %}
+            {% set pages = (totalwork/3)|int %}
+            {% set rem = (totalwork%3) %}
+            {% set pages = pages + 1 if rem > 0 else pages %}
+            {% set x = 0 %} 
+            {% set y = x + itemperpage %}
 
-                      <a href="./work.html" title="" class="black-image-project-hover">
-                        <img src="./static/assets/images/work01-hover.jpg" alt="" class="img-responsive">
-                      </a>
-                      <div class="card-container card-container-lg">
-                        <h4>001/006</h4>
-                        <h3>Fringilla sit amet</h3>
-                        <p>Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.</p>
-                        <a href="./work.html" title="" class="btn btn-default">Discover</a>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <a href="./work.html" title="" class="black-image-project-hover">
-                        <img src="./static/assets/images/work02-hover.jpg" alt="" class="img-responsive">
-                      </a>
-                      <div class="card-container card-container-lg">
-                        <h4>002/006</h4>
-                        <h3>Nulla scelerisque</h3>
-                        <p>Proin pharetra metus id iaculis dignissim. In aliquet lorem ut ex ullamcorper.</p>
-                        <a href="./work.html" title="" class="btn btn-default">Discover</a>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <a href="./work.html" title="" class="black-image-project-hover">
-                        <img src="./static/assets/images/work03-hover1.jpg" alt="" class="img-responsive">
-                      </a>
-                      <div class="card-container card-container-lg">
-                        <h4>003/006</h4>
-                        <h3>Vivamus vestibulum</h3>
-                        <p>Fusce sed hendrerit augue, a rhoncus velit. In non lorem mattis, tempor sem sit amet.</p>
-                        <a href="./work.html" title="" class="btn btn-default">Discover</a>
-                      </div>
-                    </div>
-                    
-                </div>
-                <!--/row-->
-            </div>
-            <!--/item-->
-            <div class="item">
+            {% for pageno in range(pages) %}
+
+              {% set activepage = "active" if loop.first else "" %}
+              <div class="item {{ activepage }}">
                 <div class="row">
-                  <div class="col-sm-4">
-                    <a href="./work.html" class="black-image-project-hover">
-                      <img src="./static/assets/images/work02-hover.jpg" alt="Image" class="img-responsive">
-                    </a>
-                    <div class="card-container">
-                      <h4>004/006</h4>
-                      <h3>Nulla scelerisque</h3>
-                      <p>Proin pharetra metus id iaculis dignissim. In aliquet lorem ut ex ullamcorper.</p>
-                      <a href="./work.html" class="btn btn-default">Discover</a>
-                    </div>
-                  </div>
-                   <div class="col-sm-4">
-                      <a href="./work.html" class="black-image-project-hover">
-                        <img src="./static/assets/images/work01-hover.jpg" alt="Image" class="img-responsive">
-                      </a>
-                      <div class="card-container">
-                        <h4>005/006</h4>
-                        <h3>Fringilla sit amet</h3>
-                        <p>Nulla facilisi. Vivamus vestibulum, elit in scelerisque ultricies.</p>
-                        <a href="./work.html" class="btn btn-default">Discover</a>
-                      </div>
-                    </div>
+                  {% set x = y if pageno > 0 else x %}
+                  {% set y = y + itemperpage if pageno > 0 else y%}
+
+                  {% for item in data[x:y] %}
+                    {% set workno = loop.index %}
+                    {% for work in item.values() %}
+
+                    {% set worktitle =work.get("title") %}
+                    {% set imageurl = work.get("image") %}
                     
-                    <div class="col-sm-4">
-                      <a href="./work.html" class="black-image-project-hover">
-                        <img src="./static/assets/images/work03-hover1.jpg" alt="Image" class="img-responsive">
-                      </a>
-                      <div class="card-container">
-                        <h4>006/006</h4>
-                        <h3>Vivamus vestibulum</h3>
-                        <p>Fusce sed hendrerit augue, a rhoncus velit. In non lorem mattis, tempor sem sit amet.</p>
-                        <a href="./work.html" class="btn btn-default">Discover</a>
-                      </div>
+                        <div class="col-sm-4">
+                          <a href="./work.html" title="" class="black-image-project-hover">
+                            <img src="{{ imageurl }}" alt="" class="img-responsive">
+                          </a>
+                          <div class="card-container card-container-lg">
+                            <h4>{{ workno }}/{{ totalwork }}</h4>
+                            <h3>{{ worktitle }}</h3>
+                            <p>
+                              {% for desc in work.get("description") %}
+                              {{ desc }}
+                              {% endfor %}
+                            </p>
+                            <a href="./work.html" title="" class="btn btn-default">Discover</a>
+                          </div>
+                        </div>
+     
+                    {% endfor %}
+                  {% endfor %}
+                  {% set x = y %}
+                  {% set y = y + itemperpage %}
+
                     </div>
-                    
-                </div>
-                <!--/row-->
-            </div>
-            
+
+                  <!--/row-->
+              </div>
+            {% endfor %}
             <!--/item-->
         </div>
         <!--/carousel-inner--> 

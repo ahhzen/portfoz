@@ -1,0 +1,5 @@
+{"about": [
+                        {"story1": {"title": "London Bridge Under Construction","storycontent": ["London bridge is falling down", "falling down falling down", "london bridge is falling down, my fair lady"], "image": "./static/assets/image/image1.jpg"}}, 
+                        {"story2": {"title": "Story of a monk","storycontent": ["Once upon a time in the mountain lived a monk", "he wrote a story about lesson of his life:", "the story is about a monk, once upon a time lived in the mountain who wrote about story of his life"], "image": "./static/assets/image/image2.jpg"}}
+                        ]
+            }
