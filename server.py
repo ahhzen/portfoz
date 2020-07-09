@@ -5,17 +5,30 @@ import sys
 import os
 import pymongo
 from datetime import datetime
+import json
+from functools import reduce
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    jsondata = open_json_file("index")
+    if (jsondata):
+        jsondata = jsondata.get("index")
+        return render_template("index.html", data=jsondata)
+    else:
+        return "Something went wrong"
 
 @app.route("/<string:page_name>")
 def route_page(page_name, message=""):
-    return render_template(page_name, anymessage = message)
+    file, ext = page_name.split(".")
+    jsondata = open_json_file(file)
+    if (jsondata): 
+        jsondata = jsondata.get(file)
+        return render_template(page_name, anymessage = message, data=jsondata)
+    else:
+        return render_template(page_name, anymessage = message, data=None)
 
 
 @app.route("/submitcontact", methods=["POST", "GET"])
@@ -67,6 +80,29 @@ def store_contact_csv(data):
         return message
     else:
         return True
+
+
+def open_json_file(filename):
+    
+    filename = filename + ".txt"
+    filepath = os.path.join(os.getcwd(), "database", filename)
+
+    try:
+        string = ""
+        with open(filepath, "r") as file:
+            text = file.read()
+            textlines = text.splitlines()
+            
+            for line in textlines:
+                string += line
+            file.close()
+        
+        data = json.loads(string)
+        return data
+    except:
+        err = sys.exc_info()[0]
+        print(f"Error: {err}")
+        return False
 
 if __name__ == "__main__":
     app.run(debug=True)
